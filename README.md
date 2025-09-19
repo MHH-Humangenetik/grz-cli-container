@@ -4,7 +4,7 @@ A lightweight Docker container for [grz-cli](https://github.com/BfArM-MVH/grz-to
 
 ## Version
 
-Current version: 1.2.0
+Current version: 1.2.0 (with `grz-check` 0.1.0)
 
 ## Usage
 
