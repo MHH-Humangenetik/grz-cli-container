@@ -14,4 +14,4 @@ docker run --rm -it ghcr.io/mhh-humangenetik/grz-cli:1.3.1
 
 ## License
 
-See [LICENSE](LICENSE) file for details.
+See [LICENSE](LICENSE) file for details. The license only covers this container definition and not the software contained within.
