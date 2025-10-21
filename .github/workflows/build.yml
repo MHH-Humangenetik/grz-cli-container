@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build
 
 on:
   push:
@@ -11,6 +11,10 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    name: Build and Push Docker Image
+    strategy:
+      matrix:
+        target: [slim, nextflow]
     steps:
       - name: Docker meta
         id: meta
@@ -19,15 +23,17 @@ jobs:
           # list of Docker images to use as base name for tags
           images: |
             ghcr.io/mhh-humangenetik/grz-cli
+          # prefix on nextflow images
+          flavor: |
+            prefix=${{ matrix.target == 'nextflow' && 'nextflow-' || '' }},onlatest=true
+            latest=auto
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request'
@@ -46,7 +52,10 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          target: ${{ matrix.target }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
