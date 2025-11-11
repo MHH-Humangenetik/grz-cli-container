@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 		build-base \
     && cargo install --locked --root /usr/local grz-check --version $GRZ_CHECK_VERSION
 
-FROM python:3.13.9-alpine3.22 AS slim
+FROM python:3.14.0-alpine3.22 AS slim
 ARG GRZ_CLI_VERSION
 
 RUN pip install --no-cache-dir grz-cli==$GRZ_CLI_VERSION
