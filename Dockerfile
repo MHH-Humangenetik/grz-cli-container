@@ -1,7 +1,7 @@
 ARG GRZ_CLI_VERSION=1.5.1
 ARG GRZ_CHECK_VERSION=0.2.1
 
-FROM rust:1.91.1-alpine3.22 AS rust-builder
+FROM rust:1.93.1-alpine3.22 AS rust-builder
 ARG GRZ_CHECK_VERSION
 
 RUN apk add --no-cache \
