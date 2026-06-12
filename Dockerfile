@@ -5,8 +5,7 @@ ARG GRZ_CLI_VERSION
 
 RUN apk add --no-cache \
 		build-base && \
-    pip install --no-cache-dir grz-cli==$GRZ_CLI_VERSION && \
-    apk del --no-cache build-base
+    pip install --no-cache-dir grz-cli==$GRZ_CLI_VERSION
 
 ENTRYPOINT ["grz-cli"]
 
