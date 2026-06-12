@@ -1,19 +1,12 @@
-ARG GRZ_CLI_VERSION=1.5.1
-ARG GRZ_CHECK_VERSION=0.2.1
+ARG GRZ_CLI_VERSION=1.7.2
 
-FROM rust:1.93.1-alpine3.22 AS rust-builder
-ARG GRZ_CHECK_VERSION
-
-RUN apk add --no-cache \
-		build-base \
-    && cargo install --locked --root /usr/local grz-check --version $GRZ_CHECK_VERSION
-
-FROM python:3.13.12-alpine3.22 AS slim
+FROM python:3.14.6-alpine3.24 AS slim
 ARG GRZ_CLI_VERSION
 
-RUN pip install --no-cache-dir grz-cli==$GRZ_CLI_VERSION
-
-COPY --from=rust-builder /usr/local/bin/grz-check /usr/local/bin/grz-check
+RUN apk add --no-cache \
+		build-base && \
+    pip install --no-cache-dir grz-cli==$GRZ_CLI_VERSION && \
+    apk del --no-cache build-base
 
 ENTRYPOINT ["grz-cli"]
 
