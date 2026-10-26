@@ -1,6 +1,6 @@
 ARG GRZ_CLI_VERSION=2.0.0
 
-FROM python:3.14.6-alpine3.24 AS slim
+FROM python:3.15.0-alpine3.24 AS slim
 ARG GRZ_CLI_VERSION
 
 RUN apk add --no-cache \
